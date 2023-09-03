@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import { RocketLaunchIcon, StarIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";

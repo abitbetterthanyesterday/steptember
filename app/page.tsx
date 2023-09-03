@@ -25,7 +25,7 @@ export default async function Index() {
       ?.map(
         (user: {
           name: string;
-          steps: { steps: number };
+          steps: { steps: number }[];
           team: UserData["team"];
         }) => ({
           name: user.name,

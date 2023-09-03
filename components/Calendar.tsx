@@ -35,7 +35,7 @@ export const Calendar = ({
           const isSelected = selectedDate.getDate() === i + 1;
           console.log(steps);
           const hasSteps = steps.some(
-            ({ date }) => date.split("-")[2] == i + 1
+            ({ date }) => Number(date.split("-")[2]) == i + 1
           );
           return (
             <div
