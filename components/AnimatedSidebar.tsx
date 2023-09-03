@@ -143,7 +143,7 @@ export const AnimatedSidebar = ({
         </div>
       </motion.div>
       <motion.button
-        className={`absolute text-pink-100 flex items-center justify-center z-50 bg-pink-500 rounded-full px-8 py-4 text-lg uppercase tracking-widest bottom-12 right-12 ${isOpen ? "" : "border-b-2 shadow"
+        className={`absolute text-pink-100 flex items-center justify-center z-50 bg-pink-500 rounded-full px-8 py-4 text-lg uppercase tracking-widest bottom-3 md:bottom-12 right-3 md:right-12 ${isOpen ? "" : "border-b-2 shadow"
           } border-pink-700  font-bold flex gap-2`}
         onClick={() => setIsOpen(!isOpen)}
         initial={{ opacity: 0 }}

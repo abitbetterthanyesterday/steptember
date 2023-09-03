@@ -88,7 +88,7 @@ export const LoginForm = () => {
             className="flex flex-col p-8 absolute right-0 z-50 w-full gap-8"
             variants={form}
           >
-            <div className="mx-auto flex flex-col gap-8 py-12 px-24">
+            <div className="mx-auto flex flex-col gap-8 py-12 px-2 md:px-24">
               <motion.div variants={item}>
                 <label className="flex grow-1 text-pink-100 tracking-widest pb-1 text-sm uppercase font-bold">
                   Email
@@ -97,7 +97,7 @@ export const LoginForm = () => {
                   id="steps"
                   name="email"
                   type="email"
-                  className="rounded-xl bg-white border-2 border-pink-400"
+                  className="rounded-xl bg-white border-2 border-pink-400 w-full"
                 />
               </motion.div>
               <motion.div variants={item}>
@@ -108,7 +108,7 @@ export const LoginForm = () => {
                   id="password"
                   name="password"
                   type="password"
-                  className="rounded-xl bg-white border-2 border-pink-300"
+                  className="rounded-xl bg-white border-2 border-pink-300 w-full"
                 />
               </motion.div>
               <motion.div variants={item}>

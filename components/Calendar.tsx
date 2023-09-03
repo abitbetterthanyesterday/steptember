@@ -46,7 +46,7 @@ cursor-pointer
               onClick={() => setSelectedDate(new Date(`2023-09-${i + 1}`))}
             >
               {hasSteps && (
-                <div className="h-2 w-2 absolute top-3 right-3 border-b border-indigo-800 rounded-full bg-indigo-500 z-50"></div>
+                <div className="h-2 w-2 absolute top-3 left-[calc(50% - .125rem)] border-b border-indigo-800 rounded-full bg-indigo-500 z-50"></div>
               )}
               {isSelected && (
                 <motion.div
