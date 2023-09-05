@@ -67,6 +67,7 @@ export const AddStepForm = () => {
   const [profileId, setProfileId] = useState(null);
   const [name, setName] = useState("");
   const [steps, setSteps] = useState([]);
+  const [id, setId] = useState(undefined);
   const [value, setValue] = useState(
     () =>
       steps.find(
@@ -79,13 +80,19 @@ export const AddStepForm = () => {
       steps.find(
         ({ date }) => Number(date.split("-")[2]) == selectedDate.getDate()
       )?.steps ?? 0;
+    const id =
+      steps.find(
+        ({ date }) => Number(date.split("-")[2]) == selectedDate.getDate()
+      )?.id ?? undefined;
     setValue(value);
+    setId(id);
   }, [selectedDate]);
 
-  async function handleSubmit(values: { steps: number }) {
+  async function handleSubmit() {
     setStatus("saving");
     try {
-      let { error } = await supabase.from("steps").upsert({
+      let { error, data } = await supabase.from("steps").upsert({
+        id,
         steps: value,
         date: selectedDate,
         updated_at: new Date().toISOString(),
@@ -94,9 +101,10 @@ export const AddStepForm = () => {
       const newSteps = [
         ...steps,
         {
+          id,
           steps: value,
-          date: `${selectedDate.getFullYear}-${selectedDate.getMonth() + 1
-            }-${selectedDate.getDate()}`,
+          date: `${selectedDate.getFullYear()}-${selectedDate.getMonth() + 1}-${selectedDate.getDate() - 1
+            }`,
         },
       ];
       if (error) throw error;
@@ -104,6 +112,7 @@ export const AddStepForm = () => {
       setStatus("saved");
       await new Promise((r) => setTimeout(r, 2500));
       setSteps(newSteps);
+      setId(!id);
     } catch (e) {
       console.log(e);
     } finally {
@@ -128,6 +137,7 @@ export const AddStepForm = () => {
               .from("steps")
               .select(
                 `
+    id,
     steps,
     date
     `
@@ -139,7 +149,7 @@ export const AddStepForm = () => {
           });
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [selectedDate, id]);
 
   supabase.auth.getUser().then((u) => {
     setName(u.data.user?.email.split("@")[0].split(".")[0]);

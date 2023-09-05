@@ -39,7 +39,7 @@ export default async function Index() {
       .sort((a, b) => (a.steps > b.steps ? -1 : 1)) ?? [];
 
   if (error) {
-    alert(
+    console.log(
       "An error has occured when attempting to fetch the data, please contact Aloys on Slack if this persists."
     );
   }

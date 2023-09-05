@@ -135,7 +135,7 @@ export const LoginForm = () => {
                 <InformationCircleIcon height="48" className="text-pink-300" />
                 <div className="flex flex-col gap-8 ">
                   <p>
-                    If you have difficulty to sign in, please contact Aloys on
+                    If you have difficulty signing in, please contact Aloys on
                     Slack.
                   </p>
                 </div>
