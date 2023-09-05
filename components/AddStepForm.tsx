@@ -155,6 +155,7 @@ export const AddStepForm = () => {
     setName(u.data.user?.email.split("@")[0].split(".")[0]);
   });
 
+  console.log(selectedDate);
   return (
     <div className={"h-screen overflow-y-auto"}>
       <Formik

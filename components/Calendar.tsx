@@ -42,7 +42,9 @@ export const Calendar = ({
               className={`flex items-center justify-center hover:ring-2 hover:ring-offset-2 hover:ring-indigo-500 rounded-full p-0 m-0 aspect-square relative p-4 hover:text-slate-900 hover:font-bold text-indigo-900 transition
 cursor-pointer
  ${isSelected ? "font-bold text-indigo-900" : ""}`}
-              onClick={() => setSelectedDate(new Date(2023, 8, i + 1))}
+              onClick={() =>
+                setSelectedDate(new Date(Date.UTC(2023, 8, i + 1, 0, 0, 0)))
+              }
             >
               {hasSteps && (
                 <div className="h-2 w-2 absolute top-3 left-[calc(50% - .125rem)] border-b border-indigo-800 rounded-full bg-indigo-500 z-50"></div>
