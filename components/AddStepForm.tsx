@@ -85,20 +85,7 @@ export const AddStepForm = () => {
       )?.id ?? undefined;
     setValue(value);
     setId(id);
-  }, []);
-
-  useEffect(() => {
-    const value =
-      steps.find(
-        ({ date }) => Number(date.split("-")[2]) == selectedDate.getDate()
-      )?.steps ?? 0;
-    const id =
-      steps.find(
-        ({ date }) => Number(date.split("-")[2]) == selectedDate.getDate()
-      )?.id ?? undefined;
-    setValue(value);
-    setId(id);
-  }, [selectedDate]);
+  }, [selectedDate, steps]);
 
   async function handleSubmit() {
     setStatus("saving");
