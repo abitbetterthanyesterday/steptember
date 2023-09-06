@@ -34,7 +34,8 @@ export const Calendar = ({
         {new Array(30).fill(null).map((_, i) => {
           const isSelected = selectedDate.getDate() === i + 1;
           const hasSteps = steps.some(
-            ({ date }) => Number(date.split("-")[2]) == i + 1
+            ({ date, steps }) =>
+              Number(date.split("-")[2]) == i + 1 && steps !== 0
           );
           return (
             <div

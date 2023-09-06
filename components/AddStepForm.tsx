@@ -105,7 +105,7 @@ export const AddStepForm = () => {
     try {
       let { error, data } = await supabase.from("steps").upsert({
         id,
-        steps: Number(value),
+        steps: Boolean(value) ? Number(value) : 0,
         date: selectedDate,
         updated_at: new Date().toISOString(),
         profile_id: profileId,
