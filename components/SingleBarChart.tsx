@@ -91,7 +91,10 @@ export const SingleBarChart = ({ data }: { data: UserData[] }) => {
 
               {steps ? (
                 <motion.div
-                  style={{ width: `${(steps / maxSteps) * 100}%` }}
+                  style={{
+                    width: `${(steps / maxSteps) * 100}%`,
+                    minWidth: "7ch",
+                  }}
                   className={`grow-1 h-8`}
                 >
                   <motion.div
