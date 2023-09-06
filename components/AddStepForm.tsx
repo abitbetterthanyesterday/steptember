@@ -1,12 +1,11 @@
 // @ts-nocheck
 "use client";
-import { RocketLaunchIcon, StarIcon } from "@heroicons/react/24/outline";
+import { RocketLaunchIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar } from "./Calendar";
 import { Formik, Form, Field } from "formik";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Signout } from "./SignOut";
 
 const form = {
   open: {
@@ -86,6 +85,19 @@ export const AddStepForm = () => {
       )?.id ?? undefined;
     setValue(value);
     setId(id);
+  }, []);
+
+  useEffect(() => {
+    const value =
+      steps.find(
+        ({ date }) => Number(date.split("-")[2]) == selectedDate.getDate()
+      )?.steps ?? 0;
+    const id =
+      steps.find(
+        ({ date }) => Number(date.split("-")[2]) == selectedDate.getDate()
+      )?.id ?? undefined;
+    setValue(value);
+    setId(id);
   }, [selectedDate]);
 
   async function handleSubmit() {
@@ -93,20 +105,11 @@ export const AddStepForm = () => {
     try {
       let { error, data } = await supabase.from("steps").upsert({
         id,
-        steps: value,
+        steps: Number(value),
         date: selectedDate,
         updated_at: new Date().toISOString(),
         profile_id: profileId,
       });
-      const newSteps = [
-        ...steps,
-        {
-          id,
-          steps: value,
-          date: `${selectedDate.getFullYear()}-${selectedDate.getMonth() + 1}-${selectedDate.getDate() - 1
-            }`,
-        },
-      ];
       if (error) throw error;
 
       fetchData();
@@ -120,9 +123,11 @@ export const AddStepForm = () => {
     }
   }
 
-  supabase.auth.getUser().then((u) => {
-    setName(u.data.user?.email.split("@")[0].split(".")[0]);
-  });
+  useEffect(() => {
+    supabase.auth.getUser().then((u) => {
+      setName(u.data.user?.email.split("@")[0].split(".")[0]);
+    });
+  }, []);
 
   function fetchData() {
     supabase.auth
@@ -157,8 +162,6 @@ export const AddStepForm = () => {
 
   useEffect(() => fetchData(), []);
 
-  console.log(steps);
-  console.log(selectedDate);
   return (
     <div className={"h-screen overflow-y-auto"}>
       <Formik
