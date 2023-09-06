@@ -33,6 +33,7 @@ export default async function Index() {
             (accumulator: number, { steps }) => accumulator + steps,
             0
           ),
+          days: user.steps.length,
           team: user.team,
         })
       )

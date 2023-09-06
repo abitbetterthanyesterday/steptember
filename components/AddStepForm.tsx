@@ -108,10 +108,10 @@ export const AddStepForm = () => {
         },
       ];
       if (error) throw error;
-      await new Promise((r) => setTimeout(r, 1500));
+
+      fetchData();
       setStatus("saved");
       await new Promise((r) => setTimeout(r, 2500));
-      setSteps(newSteps);
       setId(!id);
     } catch (e) {
       console.log(e);
@@ -120,7 +120,11 @@ export const AddStepForm = () => {
     }
   }
 
-  useEffect(() => {
+  supabase.auth.getUser().then((u) => {
+    setName(u.data.user?.email.split("@")[0].split(".")[0]);
+  });
+
+  function fetchData() {
     supabase.auth
       .getUser()
       .then(({ data: { user } }) => {
@@ -149,12 +153,11 @@ export const AddStepForm = () => {
           });
       })
       .catch((e) => console.log(e));
-  }, [selectedDate, id]);
+  }
 
-  supabase.auth.getUser().then((u) => {
-    setName(u.data.user?.email.split("@")[0].split(".")[0]);
-  });
+  useEffect(() => fetchData(), []);
 
+  console.log(steps);
   console.log(selectedDate);
   return (
     <div className={"h-screen overflow-y-auto"}>

@@ -31,47 +31,78 @@ export const SingleBarChart = ({ data }: { data: UserData[] }) => {
       animate={{ opacity: 1, y: 0, height: "auto" }}
       transition={{ delay: 2.5 }}
     >
-      <div className="text-white flex-wrap gap-2 px-8 flex justify-evenly py-8 border rounded-xl border-indigo-800">
+      <div className="text-white flex-wrap gap-4 px-8 flex justify-evenly py-8 border rounded-xl border-indigo-800">
         {[1, 2, 3, 4, 5].map((team) => (
           <div className="flex  items-center justify-center gap-2 " key={team}>
             <div
-              className={`h-4 w-4 rounded-full md:text-md text-sm ${getColor(
+              className={`h-8 w-8 rounded-full md:text-md text-sm ${getColor(
                 team as UserData["team"]
               )}`}
             />
-            <p>Team {team}</p>
+            <div className="flex flex-col items-center">
+              <p className="text-xs text-indigo-400 uppercase tracking-wider font-bold">
+                Team {team}
+              </p>
+              <div className="text-lg">
+                {data
+                  .filter((user) => user.team === team)
+                  .reduce((acc, curr) => acc + curr.steps, 0)
+                  .toLocaleString()}
+              </div>
+            </div>
           </div>
         ))}
       </div>
       {data &&
-        data.map(({ name, steps, team }) => (
-          <div key={name} className="flex gap-2">
-            <div className="basis-28 shrink-0 text-pink-100 md:text-xl capitalize text-md tracking-wider">
+        data.map(({ name, steps, team, days }) => (
+          <div key={name} className="flex gap-2 items-start">
+            <div className="basis-28 shrink-0 text-pink-100 md:text-xl capitalize text-md tracking-wider flex flex-col">
               {name}
+              {days ? (
+                <div className={"flex flex-grow justify-end flex-col"}>
+                  {days && (
+                    <div className="text-xs white text-indigo-500">
+                      {days} days
+                    </div>
+                  )}
+                  {days && (
+                    <div className="text-xs text-indigo-500 whitespace-nowrap">
+                      {Math.ceil(steps / days).toLocaleString()} steps/day
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
-            <motion.div
-              style={{ width: `${(steps / maxSteps) * 100}%` }}
-              className={`grow-1`}
-            >
+
+            {steps ? (
               <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ delay: 3, duration: 3 }}
-                className={`h-full rounded-full flex items-center justify-end pr-1 md:pr-2 border-b-2 ${getColor(
-                  team
-                )}
-`}
+                style={{ width: `${(steps / maxSteps) * 100}%` }}
+                className={`grow-1 h-8`}
               >
                 <motion.div
-                  className="text-indigo-950 text-sm font-bold"
-                  animate={{ opacity: 1 }}
-                  initial={{ opacity: 0 }}
-                  transition={{ delay: 6 }}
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 3, duration: 3 }}
+                  className={`h-full rounded-full flex items-center justify-end pr-1 md:pr-2 border-b-2 ${getColor(
+                    team
+                  )}
+`}
                 >
-                  {steps > 0 && steps.toLocaleString()}
+                  <motion.div
+                    className="text-indigo-950 text-sm font-bold"
+                    animate={{ opacity: 1 }}
+                    initial={{ opacity: 0 }}
+                    transition={{ delay: 6 }}
+                  >
+                    {steps > 0 && steps.toLocaleString()}
+                  </motion.div>
                 </motion.div>
               </motion.div>
-            </motion.div>
+            ) : (
+              <></>
+            )}
             {/* <div className="shrink-0 text-pink-100">{steps}</div> */}
           </div>
         ))}
