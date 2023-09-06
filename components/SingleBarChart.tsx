@@ -54,8 +54,10 @@ export const SingleBarChart = ({ data }: { data: UserData[] }) => {
         ))}
       </div>
       {data &&
-        data.map(({ name, steps, team, days }) => (
-          <div key={name} className="flex gap-2 items-start">
+        data.map(({ name, steps, team, days }, i) => (
+          <div key={name} className="flex gap-2 items-center">
+            <div className="whitespace-nowrap text-indigo-300 text-lg pr-2  w-12 shrink-0">{`${i + 1
+              }${getOrdinal(i + 1)}`}</div>
             <div className="basis-28 shrink-0 text-pink-100 md:text-xl capitalize text-md tracking-wider flex flex-col">
               {name}
               {days ? (
@@ -109,3 +111,17 @@ export const SingleBarChart = ({ data }: { data: UserData[] }) => {
     </motion.div>
   );
 };
+
+function getOrdinal(n: number) {
+  let ord = "th";
+
+  if (n % 10 == 1 && n % 100 != 11) {
+    ord = "st";
+  } else if (n % 10 == 2 && n % 100 != 12) {
+    ord = "nd";
+  } else if (n % 10 == 3 && n % 100 != 13) {
+    ord = "rd";
+  }
+
+  return ord;
+}
