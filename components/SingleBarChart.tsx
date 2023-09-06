@@ -1,5 +1,6 @@
 "use client";
 import { UserData } from "@/app/types";
+import { StarIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 
 export const SingleBarChart = ({ data }: { data: UserData[] }) => {
@@ -31,7 +32,7 @@ export const SingleBarChart = ({ data }: { data: UserData[] }) => {
       animate={{ opacity: 1, y: 0, height: "auto" }}
       transition={{ delay: 2.5 }}
     >
-      <div className="text-white flex-wrap gap-4 px-8 flex justify-evenly py-8 border rounded-xl border-indigo-800">
+      <div className="text-white flex-wrap gap-4 px-8 flex justify-evenly py-8 border rounded-xl border-indigo-700">
         {[1, 2, 3, 4, 5].map((team) => (
           <div className="flex  items-center justify-center gap-2 " key={team}>
             <div
@@ -53,61 +54,72 @@ export const SingleBarChart = ({ data }: { data: UserData[] }) => {
           </div>
         ))}
       </div>
-      {data &&
-        data.map(({ name, steps, team, days }, i) => (
-          <div key={name} className="flex gap-2 items-center">
-            <div className="whitespace-nowrap text-indigo-300 text-lg pr-2  w-12 shrink-0">{`${i + 1
-              }${getOrdinal(i + 1)}`}</div>
-            <div className="basis-28 shrink-0 text-pink-100 md:text-xl capitalize text-md tracking-wider flex flex-col">
-              {name}
-              {days ? (
-                <div className={"flex flex-grow justify-end flex-col"}>
-                  {days && (
-                    <div className="text-xs white text-indigo-500">
-                      {days} days
-                    </div>
-                  )}
-                  {days && (
-                    <div className="text-xs text-indigo-500 whitespace-nowrap">
-                      {Math.ceil(steps / days).toLocaleString()} steps/day
-                    </div>
-                  )}
-                </div>
+      <div className="flex-col flex gap-2">
+        <h1 className="flex gap-2 items-center text-indigo-100 tracking-widest self-center uppercase text-sm">
+          <StarIcon className="text-pink-500 w-4 h-4" />
+          Leaderboard
+          <StarIcon className="text-pink-500 w-4 h-4" />
+        </h1>
+        <div className="h-1 bg-pink-500 w-3/4 self-center mb-2 rounded-full" />
+        {data &&
+          data.map(({ name, steps, team, days }, i) => (
+            <div
+              key={name}
+              className="flex gap-2 items-center border rounded-xl border-indigo-700 shadow shadow-indigo p-4"
+            >
+              <div className="whitespace-nowrap text-indigo-300 text-lg pr-2  w-12 shrink-0">{`${i + 1
+                }${getOrdinal(i + 1)}`}</div>
+              <div className="basis-28 shrink-0 text-pink-100 md:text-xl capitalize text-md tracking-wider flex flex-col">
+                {name}
+                {days ? (
+                  <div className={"flex flex-grow justify-end flex-col"}>
+                    {days && (
+                      <div className="text-xs white text-indigo-500">
+                        {days} days
+                      </div>
+                    )}
+                    {days && (
+                      <div className="text-xs text-indigo-500 whitespace-nowrap">
+                        {Math.ceil(steps / days).toLocaleString()} steps/day
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+
+              {steps ? (
+                <motion.div
+                  style={{ width: `${(steps / maxSteps) * 100}%` }}
+                  className={`grow-1 h-8`}
+                >
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ delay: 3, duration: 3 }}
+                    className={`h-full rounded-full flex items-center justify-end pr-1 md:pr-2 border-b-2 ${getColor(
+                      team
+                    )}
+`}
+                  >
+                    <motion.div
+                      className="text-indigo-950 text-sm font-bold"
+                      animate={{ opacity: 1 }}
+                      initial={{ opacity: 0 }}
+                      transition={{ delay: 6 }}
+                    >
+                      {steps > 0 && steps.toLocaleString()}
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
               ) : (
                 <></>
               )}
+              {/* <div className="shrink-0 text-pink-100">{steps}</div> */}
             </div>
-
-            {steps ? (
-              <motion.div
-                style={{ width: `${(steps / maxSteps) * 100}%` }}
-                className={`grow-1 h-8`}
-              >
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ delay: 3, duration: 3 }}
-                  className={`h-full rounded-full flex items-center justify-end pr-1 md:pr-2 border-b-2 ${getColor(
-                    team
-                  )}
-`}
-                >
-                  <motion.div
-                    className="text-indigo-950 text-sm font-bold"
-                    animate={{ opacity: 1 }}
-                    initial={{ opacity: 0 }}
-                    transition={{ delay: 6 }}
-                  >
-                    {steps > 0 && steps.toLocaleString()}
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-            ) : (
-              <></>
-            )}
-            {/* <div className="shrink-0 text-pink-100">{steps}</div> */}
-          </div>
-        ))}
+          ))}
+      </div>
     </motion.div>
   );
 };
