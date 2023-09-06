@@ -33,7 +33,7 @@ export default async function Index() {
             (accumulator: number, { steps }) => accumulator + steps,
             0
           ),
-          days: user.steps.length,
+          days: user.steps.filter(({ steps }) => steps !== 0).length,
           team: user.team,
         })
       )
