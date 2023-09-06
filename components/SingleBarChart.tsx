@@ -54,6 +54,13 @@ export const SingleBarChart = ({ data }: { data: UserData[] }) => {
           </div>
         ))}
       </div>
+      <div className="flex justify-center gap-1 text-indigo-300 text-sm -mt-4">
+        All together, we have done
+        <span className="text-pink-500 font-bold">
+          {data.reduce((acc, curr) => acc + curr.steps, 0).toLocaleString()}
+        </span>{" "}
+        steps!
+      </div>
       <div className="flex-col flex gap-2">
         <h1 className="flex gap-2 items-center text-indigo-100 tracking-widest self-center uppercase text-sm">
           <StarIcon className="text-pink-500 w-4 h-4" />
