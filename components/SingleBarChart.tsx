@@ -107,7 +107,7 @@ export const SingleBarChart = ({ data }: { data: UserData[] }) => {
 `}
                   >
                     <motion.div
-                      className="text-indigo-950 text-sm font-bold"
+                      className="text-indigo-950 text-sm font-bold pr-1"
                       animate={{ opacity: 1 }}
                       initial={{ opacity: 0 }}
                       transition={{ delay: 6 }}
